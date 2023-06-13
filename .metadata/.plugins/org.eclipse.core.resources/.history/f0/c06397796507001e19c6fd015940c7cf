@@ -1,0 +1,53 @@
+package restaurantRankingProgram;
+
+public class student {
+	private String studentID;
+	private String nickName;
+	private String studentPW;
+	private String freeInfo;
+	private String role;
+	
+	public student() {
+		
+	}
+
+	public student(String inputID, String inputNick, String inputPW) {
+		setStudentID(inputID);
+		setNickName(inputNick);
+		setStudentPW(inputPW);
+	}
+	
+	public String getStudentID() {
+		return studentID;
+	}
+	public void setStudentID(String studentID) {
+		this.studentID = studentID;
+	}
+	public String getNickName() {
+		return nickName;
+	}
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
+	public String getStudentPW() {
+		return studentPW;
+	}
+	public void setStudentPW(String studentPW) {
+		this.studentPW = studentPW;
+	}
+	public String getFreeInfo() {
+		return freeInfo;
+	}
+	public void setFreeInfo(String freeInfo) {
+		this.freeInfo = freeInfo;
+	}
+	
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+	
+}

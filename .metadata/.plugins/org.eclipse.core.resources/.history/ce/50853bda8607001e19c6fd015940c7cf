@@ -1,0 +1,115 @@
+package restaurantRankingProgram;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.border.EmptyBorder;
+import java.awt.Font;
+import java.awt.Color;
+
+public class managerPage extends JFrame {
+
+	private JPanel contentPane;
+	private JButton saveBtn;
+	private JTextArea answerContent;
+	
+	public managerPage() {
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setBounds(100, 100, 700, 600);
+		setTitle("Manager Page");
+		contentPane = new JPanel(new BorderLayout());
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		
+		JLabel titlePane = new JLabel("From Manager To Customer");
+		titlePane.setFont(new Font("Rockwell Extra Bold", Font.BOLD, 20));
+		contentPane.add(titlePane, BorderLayout.NORTH);
+		
+		JPanel mainPane = new JPanel(new GridLayout(2,1));
+		JPanel subPane1 = new JPanel(new BorderLayout());
+		JLabel titleList = new JLabel("Request List");
+		titleList.setFont(new Font("Arial Black", Font.PLAIN, 15));
+		JTextArea listContent = new JTextArea();
+		//파일 가져와서 읽어오기
+		listContent.setEditable(false);
+		JScrollPane scrollPane1 = new JScrollPane(listContent);
+		
+		subPane1.add(titleList, BorderLayout.NORTH);
+		subPane1.add(scrollPane1, BorderLayout.CENTER);
+		
+		JPanel subPane2 = new JPanel(new BorderLayout());
+		JLabel titleAnswer = new JLabel("Your Answer");
+		titleAnswer.setFont(new Font("Arial Black", Font.BOLD, 15));
+		answerContent = new JTextArea();
+		JScrollPane scrollPane2 = new JScrollPane(answerContent);
+		subPane2.add(titleAnswer, BorderLayout.NORTH);
+		subPane2.add(scrollPane2, BorderLayout.CENTER);
+		
+		mainPane.add(subPane1);
+		mainPane.add(subPane2);
+		
+		contentPane.add(mainPane, BorderLayout.CENTER);
+		
+		JPanel btnPane = new JPanel(new GridLayout(3,1));
+		btnPane.add(new JLabel(""));
+		saveBtn = new JButton("SAVE");
+		ButtonHandler handler = new ButtonHandler();
+		saveBtn.addActionListener(handler);
+		//버튼 이벤트리스너 추가& answer 저장
+		saveBtn.setForeground(new Color(64, 128, 128));
+		saveBtn.setFont(new Font("Arial Black", Font.BOLD, 20));
+		JPanel subBtnPane = new JPanel(new GridLayout(1,3));
+		subBtnPane.add(new JLabel(""));
+		subBtnPane.add(saveBtn);
+		subBtnPane.add(new JLabel(""));
+		btnPane.add(subBtnPane);
+		btnPane.add(new JLabel(""));
+		
+		contentPane.add(btnPane, BorderLayout.SOUTH);
+		
+		setContentPane(contentPane);
+	}
+	
+	class ButtonHandler implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (e.getSource() == saveBtn) {
+				writeText();
+				JOptionPane.showMessageDialog(null, "Your submission is complete.", "Notification", JOptionPane.INFORMATION_MESSAGE);
+			}
+			
+		}
+		
+	}
+	
+	public void writeText() {
+		try {
+			FileOutputStream fileObject = new FileOutputStream("answer.txt", true);
+			PrintWriter x = new PrintWriter(fileObject);
+			String answerValue = answerContent.getText();
+			
+			String write = String.format("answer: %s\n", answerValue);
+	
+			x.println(write);
+			answerContent.setText("");
+			
+			x.close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+}
